@@ -1,8 +1,9 @@
 ---
 title: "180920 3D GRAPHICS"
-date: 2018-09-13 12:51:36 -0400
+date: 2019-03-27 12:51:36 -0400
 categories: Python
 ---
+
 '''python
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
