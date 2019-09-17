@@ -1,0 +1,159 @@
+---
+title: "180929 3D GRAPHICS[HOMEWORK]"
+date: 2018-09-29 12:51:36 -0400
+categories: Python
+---
+---
+```python
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from OpenGL.GL import *
+ 
+from math import *
+angle = 0
+ 
+def myReshape(w, h) :
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    aspRatio = w / h
+    gluPerspective(60, aspRatio, 0.1, 100)
+    glViewport(0,0,w,h)
+ 
+def drawAxes() :
+    glLineWidth(5)
+    glBegin(GL_LINES)
+    glColor3f(1,0,0)
+    glVertex3f(0,0,0)
+    glVertex3f(1,0,0)
+    glColor3f(0, 1, 0)
+    glVertex3f(0,0,0)
+    glVertex3f(0,1,0)
+    glColor3f(0, 0, 1)
+    glVertex3f(0,0,0)
+    glVertex3f(0,0,1)
+    glEnd()
+    glLineWidth(1)
+ 
+def myDisplay():
+    global angle
+ 
+ 
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+    gluLookAt(0,4,15, 0,0,0, 0,1,0)
+ 
+ 
+ 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+ 
+    angle += 0.1
+ 
+ 
+    drawAxes()
+ 
+    # sun
+    glColor3f(0.68,0.01,0.08) #Dakota red(#AE9315)
+    glutWireSphere(1.0, 30, 30)
+ 
+    #mars
+    glPushMatrix()
+    glRotatef(angle*3.4, 0, 1, 0)  # 공전
+    glTranslatef(3, 0, 0)
+    glRotatef(angle, 0, 1, 0)  # 자전
+    glColor3f(1, 0.55, 0) #Dark orange(#FF8C00)
+    glutWireSphere(0.25, 30, 30)
+ 
+    glPopMatrix()
+ 
+ 
+    # earth
+    glPushMatrix()
+    glRotatef(angle, 0, 1, 0) # 공전
+    glTranslatef(5, 0, 0)
+    glPushMatrix()
+    glRotatef(angle*3, 0,1,0) # 자전
+    glColor3f(0,0.2,0.4) #Midnight blue(#003366)
+    glutWireSphere(0.5, 30, 30)
+    glPopMatrix()
+ 
+    # moon
+    glRotatef(angle, 0, 1, 0)  # 공전
+    glTranslatef(1, 0, 0)
+    glRotatef(angle, 0, 1, 0)  # 자전
+    glColor3f(1, 0.96, 0.77) #Benjamin Moore Moonlight(#FFF4C5)
+    glutWireSphere(0.25, 30, 30)
+ 
+    glPopMatrix()
+ 
+    # Jupiter
+ 
+ 
+ 
+    glPushMatrix()
+    glRotatef(angle/4, 0, 1, 0)  # 공전
+    glTranslatef(7, 0, 0)
+    glRotatef(angle, 0, 0.3, 0)  # 자전
+    glColor3f(0.96, 0.87, 0.8) #(#F6DDCC)
+    glutWireSphere(0.8, 30, 30)
+    glPushMatrix()
+ 
+    #Io
+ 
+    glRotatef(angle, 0, 1, 0)  # 공전
+    glTranslatef(1.5, 0, 0)
+    glRotatef(angle, 0, 1, 0)  # 자전
+    glColor3f(0.4, 0.96, 0.77)
+    glutWireSphere(0.25, 30, 30)
+    glPopMatrix()
+ 
+    #Callisto
+ 
+    glRotatef(angle/3, 0, 1, 0)  # 공전
+    glTranslatef(1.3, 0, 0)
+    glRotatef(angle/2, 0, 1, 0)  # 자전
+    glColor3f(1, 0.66, 0.77)
+    glutWireSphere(0.25, 30, 30)
+ 
+ 
+    glPopMatrix()
+ 
+ 
+    #Saturn
+    glPushMatrix()
+    glRotatef(angle/3 * 3.4, 0, 1, 0)  # 공전
+    glTranslatef(9.5, 0, 0)
+    glRotatef(angle, 0, 1, 0)  # 자전
+    glColor3f(0.5, 0.0, 0.5)  # purple(#800080)
+    glutWireSphere(0.45, 30, 30)
+ 
+    glPopMatrix()
+ 
+    glFlush()
+ 
+    return
+ 
+def main(arg) :
+    # opengl glut initialization
+    glutInit(arg)
+ 
+    # window setting
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
+    glutInitWindowSize(1024,512)
+    glutInitWindowPosition(100, 100)
+    glutCreateWindow(b"SOLA SYS")
+ 
+    # clear color setting
+    glClearColor(0, 0, 0, 1)
+    glEnable(GL_DEPTH_TEST)
+ 
+    glutReshapeFunc(myReshape)
+    glutDisplayFunc(myDisplay)
+    glutIdleFunc(myDisplay)
+ 
+    glutMainLoop()
+ 
+ 
+if __name__ == "__main__" :
+    main(sys.argv)
+
+```
